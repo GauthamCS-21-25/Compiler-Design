@@ -1,0 +1,9 @@
+int main() {
+int a=10,b=20 ,c;
+// This is a comment
+char ch;
+/* This is a 
+multi-line comment */
+float f;
+c=a+b;
+}
