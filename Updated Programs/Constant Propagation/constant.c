@@ -3,6 +3,28 @@
 
 int value[26]; //To store values to variables
 
+void compute(char result, int arg1, char operator, int arg2){
+	int valid=1; //To check whether operator is valid
+	switch(operator){
+		case '+':
+			value[result-97]=arg1+arg2;
+			break;
+		case '-':
+			value[result-97]=arg1-arg2;
+			break;
+		case '*':
+			value[result-97]=arg1*arg2;
+			break;
+		case '/':
+			value[result-97]=arg1/arg2;
+			break;
+		default:
+			printf("Invalid operator.\n");
+			valid=0;
+	}
+	if(valid) printf("Constant Propagated: %c=%d\n", result, value[result-97]);
+}
+
 void main(){
 	int lines;
 	
@@ -22,37 +44,17 @@ void main(){
 		fgets(instruction, 10, stdin);
 		instruction[strlen(instruction)-1]='\0';
 		//Check whether instruction is like a=1+2
-		if(sscanf(instruction, "%c=%d%c%d", &result, &iarg1, &operator, &iarg2)==4){
-			if(operator=='+'){ value[result-97]=iarg1+iarg2; printf("Constant Propagated: %c=%d\n", result, value[result-97]); }
-			else if(operator=='-'){ value[result-97]=iarg1-iarg2; printf("Constant Propagated: %c=%d\n", result, value[result-97]); }
-			else if(operator=='*'){ value[result-97]=iarg1*iarg2; printf("Constant Propagated: %c=%d\n", result, value[result-97]); }
-			else if(operator=='/'){ value[result-97]=iarg1/iarg2; printf("Constant Propagated: %c=%d\n", result, value[result-97]); }
-			else printf("Invalid operator.\n");
-		}
+		if(sscanf(instruction, "%c=%d%c%d", &result, &iarg1, &operator, &iarg2)==4)
+			compute(result, iarg1, operator, iarg2);
 		//Check whether instruction is like a=1+b
-		else if(sscanf(instruction, "%c=%d%c%c", &result, &iarg1, &operator, &arg2)==4){
-			if(operator=='+'){ value[result-97]=iarg1+value[arg2-97]; printf("Constant Propagated: %c=%d\n", result, value[result-97]); }
-			else if(operator=='-'){ value[result-97]=iarg1-value[arg2-97]; printf("Constant Propagated: %c=%d\n", result, value[result-97]); }
-			else if(operator=='*'){ value[result-97]=iarg1*value[arg2-97]; printf("Constant Propagated: %c=%d\n", result, value[result-97]); }
-			else if(operator=='/'){ value[result-97]=iarg1/value[arg2-97]; printf("Constant Propagated: %c=%d\n", result, value[result-97]); }
-			else printf("Invalid operator.\n");
-		}
+		else if(sscanf(instruction, "%c=%d%c%c", &result, &iarg1, &operator, &arg2)==4)
+			compute(result, iarg1, operator, value[arg2-97]);
 		//Check whether instruction is like a=b+1
-		else if(sscanf(instruction, "%c=%c%c%d", &result, &arg1, &operator, &iarg2)==4){
-			if(operator=='+'){ value[result-97]=value[arg1-97]+iarg2; printf("Constant Propagated: %c=%d\n", result, value[result-97]); }
-			else if(operator=='-'){ value[result-97]=value[arg1-97]-iarg2; printf("Constant Propagated: %c=%d\n", result, value[result-97]); }
-			else if(operator=='*'){ value[result-97]=value[arg1-97]*iarg2; printf("Constant Propagated: %c=%d\n", result, value[result-97]); }
-			else if(operator=='/'){ value[result-97]=value[arg1-97]/iarg2; printf("Constant Propagated: %c=%d\n", result, value[result-97]); }
-			else printf("Invalid operator.\n");
-		}
+		else if(sscanf(instruction, "%c=%c%c%d", &result, &arg1, &operator, &iarg2)==4)
+			compute(result, value[arg1-97], operator, iarg2);
 		//Check whether instruction is like a=b+c
-		else if(sscanf(instruction, "%c=%c%c%c", &result, &arg1, &operator, &arg2)==4){
-			if(operator=='+'){ value[result-97]=value[arg1-97]+value[arg2-97]; printf("Constant Propagated: %c=%d\n", result, value[result-97]); }
-			else if(operator=='-'){ value[result-97]=value[arg1-97]-value[arg2-97]; printf("Constant Propagated: %c=%d\n", result, value[result-97]); }
-			else if(operator=='*'){ value[result-97]=value[arg1-97]*value[arg2-97]; printf("Constant Propagated: %c=%d\n", result, value[result-97]); }
-			else if(operator=='/'){ value[result-97]=value[arg1-97]/value[arg2-97]; printf("Constant Propagated: %c=%d\n", result, value[result-97]); }
-			else printf("Invalid operator.\n");
-		}
+		else if(sscanf(instruction, "%c=%c%c%c", &result, &arg1, &operator, &arg2)==4)
+			compute(result, value[arg1-97], operator, value[arg2-97]);
 		//Check whether instruction is like a=1
 		else if(sscanf(instruction, "%c=%d", &result, &iarg1)==2){ value[result-97]=iarg1; printf("Value stored: %c=%d\n", result, value[result-97]); }
 		//Check whether instruction is like a=b
