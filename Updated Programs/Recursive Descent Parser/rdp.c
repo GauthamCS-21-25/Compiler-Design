@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char input[10];
+char input[20];
 int i=0;
 
 void B(){
