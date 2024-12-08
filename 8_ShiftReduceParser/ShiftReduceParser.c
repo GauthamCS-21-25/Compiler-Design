@@ -56,8 +56,7 @@ void main()
         {
             int j, k;
 
-            for (j = stack_top, k = strlen(productions[i]) - 1; j >= 0, k >= 2; j--, k--)
-                ;
+            for (j = stack_top, k = strlen(productions[i]) - 1; j >= 0, k >= 2; j--, k--);
 
             stack[j + 1] = productions[i][0];
 
