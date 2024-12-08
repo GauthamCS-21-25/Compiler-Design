@@ -78,17 +78,6 @@ void main(){
 				scanf("%d", &transition[i][j][k]);
 	}
 	
-	printf("\nTransition matrices are: \n");
-	
-	for(int i=0; i<no_inputs; i++){
-		printf("Transition matrix for input%d: \n", i);
-		for(int j=0; j<no_states; j++){
-			for(int k=0; k<no_states; k++)
-				printf("%d\t", transition[i][j][k]);
-			printf("\n");
-		}
-	}
-	
 	//Compute the NFA table. Matrix of the format no_states x no_inputs
 	for(int i=0; i<no_states; i++){
 		for(int j=0; j<no_inputs; j++){
