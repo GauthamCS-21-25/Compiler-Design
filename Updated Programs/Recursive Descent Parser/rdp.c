@@ -34,7 +34,7 @@ void S(){
 	if(input[i++]=='a'){
 		A();
 		B();
-		if(input[i++]='e') printf("%s accepted.\n", input);
+		if(input[i++]=='e') printf("%s accepted.\n", input);
 		else printf("%s rejected.\n", input);
 	} else printf("%s rejected.\n", input);
 }
