@@ -1,0 +1,62 @@
+1 - Start  
+2 - Declare global variables lines, words, and characters and initialize them to 0  
+3 - Define lexical rules using Flex  
+   3.1 - Match newline character (\n)  
+      3.1.1 - Increment lines  
+      3.1.2 - Increment characters since newline is also a character  
+   3.2 - Match one or more whitespace characters ([ \t]+)  
+      3.2.1 - Increment characters by yyleng (length of matched spaces or tabs)  
+   3.3 - Match one or more alphabetic characters ([a-zA-Z]+)  
+      3.3.1 - Increment words count  
+      3.3.2 - Increment characters by yyleng  
+   3.4 - Match any other single character (.)  
+      3.4.1 - Do nothing  
+
+4 - Define function yywrap that returns 1  
+5 - Define main function  
+   5.1 - Call yylex() to perform lexical analysis  
+   5.2 - Print total number of lines  
+   5.3 - Print total number of words  
+   5.4 - Print total number of characters  
+   5.5 - Return 0  
+
+6 - End
+
+1 - Start  
+2 - Declare necessary libraries and include <stdio.h>  
+3 - Define lexical rules using Flex  
+   3.1 - Match a valid email address pattern (^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})  
+      3.1.1 - If pattern matches, return 1 (valid email)  
+   3.2 - Match any other character (.)  
+      3.2.1 - If no pattern matches, return 0 (invalid email)  
+
+4 - Define function yywrap that returns 1  
+5 - Define main function  
+   5.1 - Call yylex() to perform lexical analysis  
+   5.2 - If yylex() returns 1, print "Valid email address"  
+   5.3 - If yylex() returns 0, print "Invalid email address"  
+   5.4 - Return 0  
+
+6 - End
+
+1 - Start  
+2 - Declare necessary libraries and include <stdio.h>  
+3 - Declare global variables vowels and consonants and initialize them to 0  
+4 - Define lexical rules using Flex  
+   4.1 - Match vowels ([aeiouAEIOU])  
+      4.1.1 - Increment vowels  
+   4.2 - Match consonants ([b-df-hj-np-tv-zB-DF-HJ-NP-TV-Z])  
+      4.2.1 - Increment consonants  
+   4.3 - Match any other character (.)  
+      4.3.1 - Do nothing  
+   4.4 - Match newline character (\n)  
+      4.4.1 - Return 0 to end processing  
+
+5 - Define function yywrap that returns 1  
+6 - Define main function  
+   6.1 - Call yylex() to perform lexical analysis  
+   6.2 - Print the total number of vowels  
+   6.3 - Print the total number of consonants  
+   6.4 - Return 0  
+
+7 - End

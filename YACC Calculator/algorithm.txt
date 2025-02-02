@@ -1,0 +1,31 @@
+1 - Start  
+2 - Declare necessary libraries and include <stdio.h> and "y.tab.h"  
+3 - Declare external variable yylval  
+4 - Define lexical rules using Flex  
+   4.1 - Match one or more digits ([0-9]+)  
+      4.1.1 - Convert matched digits to integer and store in yylval  
+      4.1.2 - Return token NUMBER  
+   4.2 - Match any other character (.)  
+      4.2.1 - Return the matched character  
+   4.3 - Match newline character (\n)  
+      4.3.1 - Return 0 to end processing  
+
+5 - Define function yywrap that returns 1  
+6 - Declare necessary libraries and include <stdio.h> for the second section  
+7 - Define token NUMBER  
+8 - Define operator precedence and associativity  
+   8.1 - Left associative operators '+' and '-'  
+   8.2 - Left associative operators '*' and '/' and '%'  
+   8.3 - Left associative parentheses '(' and ')'  
+9 - Define grammar rules for ArithmeticExpression  
+   9.1 - Expression E can be a simple expression or an operator with another expression  
+   9.2 - Operators include '+', '-', '*', '/', '%' and parentheses for grouping  
+   9.3 - A NUMBER directly corresponds to the value  
+10 - Define yyerror function  
+    10.1 - Print "Invalid expression"  
+    10.2 - Set valid to 0 indicating invalid expression  
+11 - Define main function  
+    11.1 - Print prompt for entering an expression  
+    11.2 - Call yyparse() to parse the input expression  
+    11.3 - If valid, print "Valid expression"  
+12 - End

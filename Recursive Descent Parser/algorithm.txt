@@ -1,0 +1,27 @@
+1. Start  
+2. Include necessary libraries:  
+    - Include <stdio.h> for input/output functions.  
+    - Include <stdlib.h> for the `exit()` function.  
+3. Define global variables:  
+    - Declare an array `input[20]` to store the input string.  
+    - Declare an integer variable `i` initialized to 0 to keep track of the current position in the input string.  
+4. Define function `B`:  
+    - If the current character is `'d'`, continue.  
+    - If not, print "rejected" and exit the program.  
+5. Define function `A_dash`:  
+    - If the current character is `'b'`, check for `'c'` and recursively call `A_dash`.  
+    - If not `'c'`, print "rejected" and exit the program.  
+    - If epsilon is encountered, decrement `i` to move back in the string.  
+6. Define function `A`:  
+    - If the current character is `'b'`, call `A_dash`.  
+    - If not `'b'`, print "rejected" and exit the program.  
+7. Define function `S`:  
+    - If the current character is `'a'`, call `A` and `B`.  
+    - Check if the next character is `'e'`.  
+        - If yes, print "accepted".  
+        - If no, print "rejected".  
+    - If the input does not start with `'a'`, print "rejected".  
+8. Define `main` function:  
+    - Prompt the user to enter a string and store it in `input`.  
+    - Call the `S` function.  
+9. End

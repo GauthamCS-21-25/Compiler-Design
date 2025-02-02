@@ -1,0 +1,51 @@
+1 - Start  
+2 - Declare necessary libraries and include <stdio.h>, <stdlib.h>, and <string.h>  
+3 - Define constants:  
+   3.1 - `MAX_SIZE` with a value of 10, representing the maximum number of productions  
+   3.2 - `MAX_LENGTH` with a value of 20, representing the maximum length of a production or input string  
+4 - Declare variables:  
+   4.1 - `no_prod` to store the number of productions  
+   4.2 - `production[MAX_SIZE][MAX_LENGTH]` to store the productions  
+   4.3 - `input[MAX_LENGTH]` to store the input string  
+   4.4 - `stack[MAX_LENGTH]` to store the stack during parsing  
+   4.5 - `ptr` initialized to 0, to serve as a pointer for traversing the input string  
+   4.6 - `top` initialized to -1, to indicate the empty state of the stack  
+5 - Prompt user to enter the total number of productions:  
+   5.1 - Display message: "Enter the total no. of productions:"  
+   5.2 - Read the number of productions into `no_prod`  
+6 - Prompt user to enter the productions:  
+   6.1 - Display message: "Enter the productions:"  
+   6.2 - Loop from 0 to `no_prod - 1` and read each production into `production[i]`  
+7 - Prompt user to enter the input string:  
+   7.1 - Display message: "Enter the input string:"  
+   7.2 - Read the input string into `input`  
+8 - Display the header for the parsing process:  
+   8.1 - Print the following columns: "Stack Input Action"  
+9 - Begin the parsing process with a do-while loop:  
+   9.1 - Initialize `shift` to 0 and `reduce` to 1 at the start of each iteration  
+   9.2 - Check whether the current state is a valid acceptance condition:  
+      9.2.1 - If the stack contains the start symbol and the input string ends with a space (indicating an empty input), accept the string  
+      9.2.2 - Print "String accepted."  
+      9.2.3 - Exit the program using `exit(0)`  
+   9.3 - If the string has not been accepted, begin searching for a reduce operation:  
+      9.3.1 - Loop through each production from 0 to `no_prod - 1`  
+      9.3.2 - For each production, check if the stack contains the right-hand side of the production in reverse order (from top of the stack):  
+         9.3.2.1 - If the stack content matches the production's right-hand side (from last to first character), set `reduce` to 1 and break the loop  
+         9.3.2.2 - If no match is found, continue with the next production  
+      9.3.3 - If a reduce operation is found, perform the following actions:  
+         9.3.3.1 - Loop through the stack in reverse and match with the production's right-hand side  
+         9.3.3.2 - Once the matched portion is found, pop the corresponding characters from the stack  
+         9.3.3.3 - Replace the matched portion with the left-hand side of the production  
+         9.3.3.4 - Update the stack accordingly  
+         9.3.3.5 - Print the stack, input, and the applied action (i.e., the production applied)  
+   9.4 - If no reduce operation was found, check for a shift operation:  
+      9.4.1 - If there are characters left in the input string (i.e., `input[ptr]` is not the null terminator), perform a shift operation  
+      9.4.2 - Push the next character from the input onto the stack  
+      9.4.3 - Increment `top` to reflect the change in stack size  
+      9.4.4 - Set `stack[top]` to `input[ptr]` and terminate the string in the stack by adding a null terminator at `stack[top + 1]`  
+      9.4.5 - Replace the corresponding character in the input string (`input[ptr]`) with a space to signify that it has been processed  
+      9.4.6 - Increment `ptr` to move the input pointer forward  
+      9.4.7 - Print the stack, input, and the applied action (i.e., "Shift")  
+10 - Repeat steps 9.1 to 9.4 until no more shift or reduce actions are performed  
+11 - If no valid shift or reduce actions are possible, print "String rejected."  
+12 - End

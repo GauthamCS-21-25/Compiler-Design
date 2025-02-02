@@ -1,0 +1,56 @@
+1 - Start  
+2 - Declare necessary libraries and include <stdio.h> and "y.tab.h"  
+3 - Declare external variable yylval  
+4 - Define lexical rules using Flex  
+   4.1 - Match one or more digits ([0-9]+)  
+      4.1.1 - Convert the matched digits to integer and store in yylval  
+      4.1.2 - Return the token NUMBER  
+   4.2 - Match any other character (.)  
+      4.2.1 - Return the matched character  
+   4.3 - Match newline character (\n)  
+      4.3.1 - Return 0 to end processing  
+5 - Define function yywrap that returns 1  
+6 - Declare necessary libraries and include <stdio.h> for the second section  
+7 - Define token NUMBER  
+8 - Define operator precedence and associativity  
+   8.1 - Left associative operators '+' and '-'  
+   8.2 - Left associative operators '*' and '/' and '%'  
+   8.3 - Left associative parentheses '(' and ')'  
+9 - Define grammar rules for ArithmeticExpression  
+   9.1 - Expression E can be a simple expression or an operator with another expression  
+   9.2 - Operators include '+', '-', '*', '/', '%' and parentheses for grouping  
+   9.3 - A NUMBER directly corresponds to the value  
+10 - Define yyerror function  
+    10.1 - Print "Invalid expression"  
+    10.2 - Set valid to 0 indicating invalid expression  
+11 - Define main function  
+    11.1 - Print prompt for entering an expression  
+    11.2 - Call yyparse() to parse the input expression  
+    11.3 - If valid, print "Valid expression"  
+12 - End
+
+1 - Start  
+2 - Declare necessary libraries and include "y.tab.h"  
+3 - Define lexical rules using Flex  
+   3.1 - Match a letter or underscore followed by letters, digits, or underscores ([a-zA-Z_][a-zA-Z_0-9]*)  
+      3.1.1 - Return token `letter`  
+   3.2 - Match a digit ([0-9])  
+      3.2.1 - Return token `digit`  
+   3.3 - Match any other character (.)  
+      3.3.1 - Return the matched character  
+   3.4 - Match newline character (\n)  
+      3.4.1 - Return 0 to end processing  
+4 - Define function yywrap that returns 1  
+5 - Declare necessary libraries and include <stdio.h> for the second section  
+6 - Define tokens `letter` and `digit`  
+7 - Define grammar rules for start  
+   7.1 - `start` consists of a letter followed by `s`  
+   7.2 - `s` can be a letter, digit, or empty (for identifier validity)  
+8 - Define yyerror function  
+   8.1 - Print "Invalid identifier"  
+   8.2 - Set `valid` to 0 indicating invalid identifier  
+9 - Define main function  
+   9.1 - Print prompt for entering an identifier  
+   9.2 - Call yyparse() to parse the input identifier  
+   9.3 - If valid, print "Valid identifier"  
+10 - End

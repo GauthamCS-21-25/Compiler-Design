@@ -1,0 +1,46 @@
+1. Start
+
+2. Include necessary libraries  
+    2.1. Include the header file <stdio.h> for input and output operations like printing and reading from the console.  
+    2.2. Include the header file <string.h> to use string functions such as strlen, strcpy, and strchr for manipulating and comparing strings.  
+
+3. Define constants  
+    3.1. Define a constant named MAX_SIZE with a value of 20. This constant limits the maximum number of productions that can be stored in the program.  
+    3.2. Define a constant named MAX_LENGTH with a value of 20. This constant limits the maximum length of each production string that will be entered by the user.  
+
+4. Declare global variables  
+    4.1. Declare an integer variable named no_prod. This variable will hold the number of productions provided by the user.  
+    4.2. Declare a 2D character array named production[MAX_SIZE][MAX_LENGTH]. This array will store the productions entered by the user. It has a maximum size of 20 productions, with each production having a maximum length of 20 characters.  
+    4.3. Declare a 2D character array named first[26][MAX_LENGTH]. This array will store the FIRST sets for each non-terminal in the grammar. Each non-terminal can have up to MAX_LENGTH characters in its FIRST set. The array has 26 rows, corresponding to the 26 possible uppercase English letters.  
+
+5. Define helper functions  
+    5.1. Define a function named getFirst that takes a character nonterminal as input and returns the FIRST set of that non-terminal.  
+        5.1.1. The function finds the FIRST set by accessing the first array using the ASCII value of the non-terminal character (subtracted by 65 to map 'A' to index 0, 'B' to index 1, etc.).  
+        5.1.2. The function returns the FIRST set for that non-terminal from the first array.  
+
+    5.2. Define a function named addToFirst that takes a character nonterminal and a character symbol as input. This function adds the symbol to the FIRST set of the non-terminal.  
+        5.2.1. The function first retrieves the FIRST set of the non-terminal by accessing the first array.  
+        5.2.2. It checks if the symbol is already in the FIRST set using the strchr function.  
+        5.2.3. If the symbol is not found, it appends the symbol to the FIRST set of the non-terminal.  
+
+    5.3. Define a function named mergeFirstSets that takes a character nonterminal and a string source as input. This function merges the symbols from the source FIRST set into the non-terminal's FIRST set.  
+        5.3.1. The function iterates through the characters in the source string.  
+        5.3.2. It calls addToFirst to add each character from the source string to the non-terminal's FIRST set.  
+
+    5.4. Define a function named findFirst that takes two integer parameters pidx and cidx. pidx represents the index of the production, and cidx represents the index of the current symbol in the production.  
+        5.4.1. The function checks if the current symbol is a terminal or epsilon by comparing its ASCII value. If it is not an uppercase letter, it is considered a terminal.  
+        5.4.2. If the current symbol is a terminal, the function calls addToFirst to add the terminal symbol to the FIRST set of the non-terminal at production[pidx][0].  
+        5.4.3. If the current symbol is a non-terminal, the function calls mergeFirstSets to merge the FIRST set of the non-terminal at production[pidx][cidx] into the FIRST set of the non-terminal at production[pidx][0].  
+        5.4.4. If the symbol in the FIRST set is epsilon (represented as `#`), the function moves to the next symbol and continues processing until a terminal is encountered or all symbols are processed.  
+
+    5.5. Define a function named printFirstSets. This function prints the FIRST sets of all non-terminals.  
+        5.5.1. It loops through the first array.  
+        5.5.2. If the FIRST set for a non-terminal is not empty, the function prints the non-terminal and its FIRST set. It separates the symbols in the FIRST set with commas.  
+
+6. Define the main function  
+    6.1. In the main function, prompt the user to enter the total number of productions. Store the input value in the variable no_prod.  
+    6.2. Ask the user to input each production and store them in the production array. For each production, use scanf to read it as a string.  
+    6.3. After reading the productions, compute the FIRST sets. This is done by calling the findFirst function for each production, starting from the last production to the first one (since FIRST sets depend on other non-terminals). The function is called with parameters i (the production index) and 2 (the index of the first symbol in the production).  
+    6.4. Finally, call the printFirstSets function to display the FIRST sets of all non-terminals.  
+
+7. End

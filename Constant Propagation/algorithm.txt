@@ -1,0 +1,37 @@
+1 - Start  
+2 - Declare the necessary libraries:  
+   2.1 - Include <stdio.h>  
+   2.2 - Include <string.h>  
+3 - Define an array `value[26]` to store values corresponding to variables (assumed that the variables are from 'a' to 'z').  
+4 - Define the `compute` function to perform arithmetic operations and propagate constants:  
+   4.1 - Declare a local variable `valid` and initialize it to 1 to track whether the operation is valid  
+   4.2 - Use a switch statement to process the operator:  
+      4.2.1 - If the operator is '+', add the two arguments and store the result in the `value` array at the index corresponding to `result`  
+      4.2.2 - If the operator is '-', subtract the second argument from the first and store the result in the `value` array at the index corresponding to `result`  
+      4.2.3 - If the operator is '*', multiply the two arguments and store the result in the `value` array at the index corresponding to `result`  
+      4.2.4 - If the operator is '/', divide the first argument by the second and store the result in the `value` array at the index corresponding to `result`  
+      4.2.5 - If the operator is invalid (not one of '+', '-', '*', or '/'), print "Invalid operator." and set `valid` to 0  
+   4.3 - If the operation was valid, print the constant propagated (i.e., the result stored for the variable `result`).  
+5 - Define the `main` function:  
+   5.1 - Declare a variable `lines` to store the number of lines in the program  
+   5.2 - Declare a string `instruction[10]` to store each instruction input  
+   5.3 - Declare variables `result`, `arg1`, `operator`, and `arg2` to store the operands and operator from the instruction  
+   5.4 - Declare integer variables `iarg1` and `iarg2` to store integer arguments from the instruction  
+6 - Prompt the user for the total number of lines in the program:  
+   6.1 - Display message: "Enter the total number of lines in the program:"  
+   6.2 - Read the number of lines into `lines`  
+7 - Prompt the user to enter the program:  
+   7.1 - Display message: "Enter the program:"  
+   7.2 - Loop for each line of input (`lines` times):  
+      7.2.1 - Prompt for an instruction by printing ">"  
+      7.2.2 - Read the instruction into `instruction` using `fgets`  
+      7.2.3 - Remove the newline character from the input string using `instruction[strlen(instruction)-1] = '\0'`  
+8 - Check for different formats of instructions using `sscanf`:  
+   8.1 - If the instruction is of the format "a=1+2", parse and call `compute(result, iarg1, operator, iarg2)`  
+   8.2 - If the instruction is of the format "a=1+b", parse and call `compute(result, iarg1, operator, value[arg2-97])`  
+   8.3 - If the instruction is of the format "a=b+1", parse and call `compute(result, value[arg1-97], operator, iarg2)`  
+   8.4 - If the instruction is of the format "a=b+c", parse and call `compute(result, value[arg1-97], operator, value[arg2-97])`  
+   8.5 - If the instruction is of the format "a=1", store the value in `value[result-97]` and print "Value stored: a=1"  
+   8.6 - If the instruction is of the format "a=b", propagate the value from `value[arg1-97]` and print "Constant Propagated: a=1"  
+   8.7 - If none of the formats match, print "Invalid instruction."  
+9 - End

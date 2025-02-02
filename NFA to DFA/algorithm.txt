@@ -1,0 +1,63 @@
+1. Start  
+2. Include necessary libraries  
+   2.1. Include <stdio.h> for standard input/output functions.  
+   2.2. Include <math.h> for mathematical operations (if required).  
+   2.3. Include <string.h> for string manipulation functions.  
+
+3. Define constants  
+   3.1. Define MAX_INPUTS as 10, which limits the maximum number of inputs for the transition matrix.  
+   3.2. Define MAX_STATES as 10, which limits the maximum number of states in the NFA and DFA.  
+   3.3. Define MAX_SIZE as 10, which limits the maximum length of a string to be stored in the NFA and DFA tables.  
+   3.4. Define DFA_STATES as 2^10, which represents the maximum number of possible states in the DFA (since a DFA can have at most 2^n states, where n is the number of states in the NFA).  
+
+4. Declare global variables  
+   4.1. transition[MAX_INPUTS][MAX_STATES][MAX_STATES]: A 3D array representing the transition matrix. It stores the transitions between states for each input.  
+   4.2. nfatable[MAX_STATES][MAX_INPUTS][MAX_SIZE]: A 3D array representing the NFA table. Each cell stores the possible next states for a given input and state.  
+   4.3. dfatable[DFA_STATES][MAX_INPUTS+1][MAX_SIZE]: A 3D array representing the DFA table. It stores the transitions for the DFA states and the names of the states in the DFA.  
+   4.4. no_inputs: An integer to store the number of inputs (size of the transition matrix).  
+   4.5. no_states: An integer to store the number of states in the NFA and DFA.  
+   4.6. idx: An integer to track the current index of the DFA table.  
+   4.7. final_idx: An integer to track the last index of the DFA table.  
+   4.8. newStr[100]: A string to store new states without repetition, sorted in ascending order.  
+
+5. Define sortRemove function  
+   5.1. Initialize newStr as an empty string.  
+   5.2. Loop through each character in the input string str.  
+      5.2.1. If the character is not already present in newStr, append it to newStr.  
+   5.3. Sort the characters in newStr in ascending order using a simple bubble sort algorithm.  
+   5.4. Return the sorted string newStr.  
+
+6. Define addDFAState function  
+   6.1. Check if the given state currentState already exists in the DFA table.  
+      6.1.1. Loop through the existing states in dfatable.  
+      6.1.2. If the currentState matches any of the existing states, set exist to 1.  
+   6.2. If the state does not already exist, add it to the DFA table.  
+      6.2.1. Copy currentState into the dfatable[final_idx][0] (first column of the current row).  
+   6.3. For each input, process the transition for currentState.  
+      6.3.1. Loop through each character in currentState.  
+      6.3.2. Concatenate the next states for each input.  
+      6.3.3. Update the state transitions in the DFA table.  
+      6.3.4. Use the sortRemove function to process the state transitions and remove repeated characters.  
+   6.4. Increment final_idx to add the new state to the DFA table.  
+
+7. Define main function  
+   7.1. Prompt the user to enter the number of inputs (no_inputs).  
+   7.2. Prompt the user to enter the number of states (no_states).  
+   7.3. Read the transition matrix for each input.  
+      7.3.1. For each input, prompt the user to enter the transition matrix (an no_states x no_states matrix).  
+      7.3.2. Read the transitions from the user input and store them in the transition matrix.  
+   7.4. Compute the NFA table (nfatable).  
+      7.4.1. For each state and input, check which states are reachable from the current state via the current input.  
+      7.4.2. If a transition exists, concatenate the target state to the respective cell in the nfatable.  
+   7.5. Print the NFA table.  
+      7.5.1. Loop through each state and input, printing the corresponding transitions from the nfatable.  
+   7.6. Add the first state of the NFA to the DFA table.  
+      7.6.1. Call addDFAState with the first state of the NFA as the input.  
+   7.7. Process undiscovered states and fill in the DFA table.  
+      7.7.1. Repeat the process until all states have been discovered and added to the DFA table.  
+      7.7.2. In each iteration, process the transitions of the previous row of states in the DFA table.  
+      7.7.3. For each input, add the corresponding transition states to the DFA table.  
+   7.8. Print the final DFA states.  
+      7.8.1. Loop through the rows of the DFA table and print the state transitions.  
+
+8. End
