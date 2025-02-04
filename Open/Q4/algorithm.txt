@@ -1,0 +1,62 @@
+1 - Start  
+2 - Declare constants and variables  
+   2.1 - Define MAX_STATES = 100 (maximum number of states)  
+   2.2 - Define MAX_SYMBOLS = 10 (maximum number of input symbols)  
+   2.3 - Declare global arrays for DFA information  
+      2.3.1 - `dfa[MAX_STATES][MAX_SYMBOLS]` to store the DFA transition table  
+      2.3.2 - `isFinal[MAX_STATES]` to store final states  
+      2.3.3 - `marked[MAX_STATES][MAX_STATES]` for the table-filling algorithm  
+   2.4 - Declare utility functions: `min(a, b)` and `max(a, b)` for minimum and maximum of two integers  
+
+3 - Main function  
+4 - Input DFA description  
+   4.1 - Input the number of states `n`  
+   4.2 - Input the number of symbols in the alphabet `numSymbols`  
+   4.3 - Input the transition table  
+      4.3.1 - For each state and for each symbol, input the destination state for the transition  
+   4.4 - Input the set of final states  
+      4.4.1 - Input the number of final states `numFinal`  
+      4.4.2 - For each final state, mark it as final in `isFinal`  
+
+5 - Minimization using the table-filling algorithm  
+   5.1 - Initialize the table  
+      5.1.1 - Mark all pairs `(i, j)` where one state is final and the other is not as distinguished  
+      5.1.2 - For equivalent states, mark them as not distinguished  
+   
+   5.2 - Iteratively mark pairs that are distinguishable  
+      5.2.1 - For each pair `(i, j)` that is not yet distinguished  
+      5.2.2 - For each input symbol, check the transitions  
+      5.2.3 - If transitions lead to already distinguished states, mark `(i, j)` as distinguished  
+
+6 - Group equivalent states  
+   6.1 - Two states `i` and `j` are equivalent if they are not marked as distinguished  
+   6.2 - Assign each state a representative (smallest state in its equivalence class)  
+      6.2.1 - For each pair of states `(i, j)`, update their representative if they are equivalent  
+
+   6.3 - Update every state's representative by following the chain of representatives  
+
+7 - Count the number of unique equivalence classes  
+   7.1 - Create an array `used[MAX_STATES]` to track representatives  
+   7.2 - Count how many equivalence classes there are based on the representatives  
+
+8 - Create a mapping from the old state's representative to the new state number  
+   8.1 - For each representative, assign a new state number starting from 0  
+
+9 - Build the minimized DFA  
+   9.1 - Initialize the minimized DFA transition table `minDFA[MAX_STATES][MAX_SYMBOLS]`  
+   9.2 - For each state, use its representative to define transitions  
+   9.3 - Copy the transitions from the original DFA to the minimized DFA  
+
+10 - Determine the new set of final states for the minimized DFA  
+    10.1 - If any state in the equivalence class is final in the original DFA, mark the new state as final  
+
+11 - Determine the new initial state for the minimized DFA  
+    11.1 - The new initial state is the new state corresponding to the original initial state (state 0)  
+
+12 - Output the minimized DFA  
+    12.1 - Print the number of states in the minimized DFA  
+    12.2 - Print the new initial state  
+    12.3 - Print the new final states  
+    12.4 - Print the minimized transition table  
+
+13 - End

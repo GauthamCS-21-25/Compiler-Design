@@ -1,0 +1,56 @@
+1 - Start  
+2 - Declare constants and variables  
+   2.1 - Define MAX_PRODUCTIONS = 20 (maximum number of productions)  
+   2.2 - Define MAX_LEN = 50 (maximum length of a production string)  
+   2.3 - Declare a `Production` structure with two fields: left (nonterminal) and right (right-hand side string)  
+   2.4 - Declare arrays for storing FIRST and FOLLOW sets:  
+      2.4.1 - `firstSet[26][128]` to store FIRST sets for nonterminals ('A' to 'Z')  
+      2.4.2 - `followSet[26][128]` to store FOLLOW sets for nonterminals ('A' to 'Z')  
+   2.5 - Declare a global flag `changed` to track changes during set computation  
+
+3 - Define helper functions  
+   3.1 - `isNonTerminal(c)`  
+      3.1.1 - Returns true if `c` is a nonterminal (uppercase letter)  
+   3.2 - `addToSet(set, sym)`  
+      3.2.1 - Adds the symbol `sym` to the set represented as a boolean array  
+      3.2.2 - Marks `changed` as true if the symbol was not already in the set  
+
+4 - Define `computeFirst()` function  
+   4.1 - Initialize `changed` as true  
+   4.2 - Repeat the following until no more changes occur  
+      4.2.1 - For each production A -> α:  
+         4.2.1.1 - Process each symbol `X` in α (right-hand side) from left to right  
+         4.2.1.2 - If `X` is a terminal, add it to FIRST(A) and stop  
+         4.2.1.3 - If `X` is a nonterminal, add all symbols in FIRST(X) (except epsilon) to FIRST(A)  
+         4.2.1.4 - If FIRST(X) contains epsilon, continue with the next symbol  
+         4.2.1.5 - If all symbols of α can derive epsilon, add epsilon to FIRST(A)  
+
+5 - Define `computeFollow()` function  
+   5.1 - Place `$` in FOLLOW(S), where `S` is the start symbol  
+   5.2 - Initialize `changed` as true  
+   5.3 - Repeat the following until no more changes occur  
+      5.3.1 - For each production A -> α, process every symbol `B` in α (that is a nonterminal)  
+      5.3.2 - Compute FIRST(beta), where beta is the substring to the right of `B`  
+         5.3.2.1 - If beta is terminal, add it to FOLLOW(B) and stop  
+         5.3.2.2 - If FIRST(beta) contains epsilon, continue to the next symbol in beta  
+         5.3.2.3 - If beta is empty or can derive epsilon, add FOLLOW(A) to FOLLOW(B)  
+
+6 - Main function  
+7 - Input the number of productions  
+   7.1 - If the input is invalid or exceeds MAX_PRODUCTIONS, print an error message and exit  
+
+8 - Input the productions  
+   8.1 - For each production, read the left-hand side and right-hand side  
+   8.2 - Parse the production string and store the left and right parts correctly  
+
+9 - Initialize FIRST and FOLLOW sets for each nonterminal to false  
+
+10 - Compute FIRST sets using `computeFirst()`  
+11 - Compute FOLLOW sets using `computeFollow()`  
+
+12 - Output the FOLLOW sets  
+   12.1 - For each nonterminal (that appears as the left-hand side of a production), print the corresponding FOLLOW set  
+   12.2 - Print `$` as part of the FOLLOW set for the start symbol  
+
+13 - End
+
