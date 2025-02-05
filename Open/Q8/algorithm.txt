@@ -1,0 +1,62 @@
+1 - Start  
+
+2 - Declare constants and variables  
+  2.1 - Define Constants  
+    2.1.1 - Set MAX_NODES = 50 (Maximum number of AST nodes)  
+  2.2 - Define AST Node Structure  
+    2.2.1 - Create a structure with the following fields:  
+      2.2.1.1 - op (operator: `+`, `-`, `*`, `/`, `=`)  
+      2.2.1.2 - var (variable name, if applicable)  
+      2.2.1.3 - left (left child)  
+      2.2.1.4 - right (right child)  
+  2.3 - Declare a stack for register management  
+    2.3.1 - Define regStack[MAX_NODES] (Stores available registers)  
+    2.3.2 - Set top (Index to track the top of the register stack)  
+  2.4 - Declare helper variables  
+    2.4.1 - Set regCount (Keeps track of register usage)  
+    2.4.2 - Define instructionList[MAX_NODES][50] (Stores generated assembly instructions)  
+
+3 - Define Helper Functions  
+  3.1 - Define createNode(op, var, left, right)  
+    3.1.1 - Allocate memory for a new AST node  
+    3.1.2 - Initialize op, var, left, and right fields  
+  3.2 - Define getRegister()  
+    3.2.1 - Return an available register (e.g., AX, BX, CX, DX)  
+    3.2.2 - Check if all registers are in use, otherwise spill to memory  
+  3.3 - Define releaseRegister(reg)  
+    3.3.1 - Mark reg as available for future use  
+
+4 - Define generateCode(root) Function  
+  4.1 - Check if root is NULL, otherwise return  
+  4.2 - Recursively Process Left and Right Subtrees  
+    4.2.1 - Call generateCode(root->left)  
+    4.2.2 - Call generateCode(root->right)  
+  4.3 - Process Operators (`+`, `-`, `*`, `/`, `=`)  
+    4.3.1 - Check if root->op == '='  
+      4.3.1.1 - Store AX in [root->var]  
+      4.3.1.2 - Output MOV [root->var], AX  
+    4.3.2 - Check if root->op == '+'  
+      4.3.2.1 - Pop value into BX  
+      4.3.2.2 - Output ADD AX, BX  
+    4.3.3 - Check if root->op == '-'  
+      4.3.3.1 - Pop value into BX  
+      4.3.3.2 - Output SUB AX, BX  
+    4.3.4 - Check if root->op == '*'  
+      4.3.4.1 - Pop value into BX  
+      4.3.4.2 - Output MUL BX (result in AX)  
+    4.3.5 - Check if root->op == '/'  
+      4.3.5.1 - Pop value into BX  
+      4.3.5.2 - Output DIV BX (quotient in AX)  
+  4.4 - Process Operands (Variables or Constants)  
+    4.4.1 - Load value into AX  
+      4.4.1.1 - Output MOV AX, [root->var]  
+      4.4.1.2 - Output PUSH AX  
+
+5 - Define main() Function  
+  5.1 - Read AST Structure  
+    5.1.1 - Read production rules or manually construct an AST  
+  5.2 - Initialize Registers and Stack  
+  5.3 - Call generateCode(root)  
+  5.4 - Output Generated Assembly Code  
+
+6 - End  
